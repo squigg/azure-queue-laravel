@@ -1,0 +1,40 @@
+{
+  "name": "squigg/azure-queue-laravel",
+  "description": "Laravel 5 Queue Driver for Microsoft Azure Storage Queue",
+  "keywords": [
+    "laravel",
+    "azure",
+    "storage",
+    "queue"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Steve Strugnell",
+      "email": "github@squigg.co.uk"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "pear",
+      "url": "https://pear.php.net"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/queue": "~5.2",
+    "microsoft/windowsazure": "0.4.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.5",
+    "orchestra/testbench": "~3.2",
+    "mockery/mockery": "0.9.5",
+    "satooshi/php-coveralls": "v1.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Squigg\\AzureQueueLaravel\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}
