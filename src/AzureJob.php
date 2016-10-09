@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
 use MicrosoftAzure\Storage\Queue\Models\MicrosoftAzureQueueMessage;
-use MicrosoftAzure\Storage\Queue\Models\QueueMessage;
 use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
 class AzureJob extends Job implements JobContract
@@ -50,16 +49,6 @@ class AzureJob extends Job implements JobContract
         $this->job = $job;
         $this->queue = $queue;
         $this->container = $container;
-    }
-
-    /**
-     * Fire the job.
-     *
-     * @return void
-     */
-    public function fire()
-    {
-        $this->resolveAndFire(json_decode($this->getRawBody(), true));
     }
 
     /**
@@ -120,7 +109,7 @@ class AzureJob extends Job implements JobContract
     /**
      * Get the underlying raw Azure job.
      *
-     * @return QueueMessage
+     * @return MicrosoftAzureQueueMessage
      */
     public function getAzureJob()
     {
