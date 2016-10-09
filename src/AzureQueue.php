@@ -133,6 +133,16 @@ class AzureQueue extends Queue implements QueueInterface
     }
 
     /**
+     * Get the visibility timeout for queue messages.
+     *
+     * @return int
+     */
+    public function getVisibilityTimeout()
+    {
+        return $this->visibilityTimeout;
+    }
+
+    /**
      * Get the underlying Azure IQueue instance.
      *
      * @return IQueue
@@ -143,7 +153,7 @@ class AzureQueue extends Queue implements QueueInterface
     }
 
     /**
-     * Get the size of the queue.
+     * Get the approximate size of the queue.
      *
      * @param  string $queue
      * @return int
