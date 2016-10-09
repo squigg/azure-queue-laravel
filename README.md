@@ -11,7 +11,7 @@ PHP Laravel 5 Queue Driver package for Microsoft Azure Storage Queues
 
 ### Prerequisites
 
-- PHP 5.5+
+- PHP 5.6+
 - Laravel 5.2 or 5.3 (not tested on previous versions)
 - Microsoft Azure Storage account and API key
 - Queue container created through Azure Portal
