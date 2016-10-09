@@ -11,7 +11,7 @@ PHP Laravel 5 Queue Driver package for Microsoft Azure Storage Queues
 
 ### Prerequisites
 
-- PHP 5.5+
+- PHP 5.5+ (5.6 required for v5.3+)
 - Laravel 5.2 or 5.3 (not tested on previous versions)
 - Microsoft Azure Storage account and API key
 - Queue container created through Azure Portal
@@ -50,7 +50,7 @@ Add the ServiceProvider to your `providers` array in `app/config/app.php`:
 add the following to the `connection` array in `app/config/queue.php`, set your `default` connection to `azure` and fill out your own connection data from the Azure Management portal:
 
 	'azure' => array(
-        'driver'        => 'azure.blob',    // Leave this
+        'driver'        => 'azure',         // Leave this
         'protocol'      => 'https'          // https or http
         'accountname'   => '',              // Azure storage account name
         'key'           => '',              // Access key for storage account
@@ -59,6 +59,10 @@ add the following to the `connection` array in `app/config/queue.php`, set your 
     )
 
 You can add environment variables into your `.env` file to set the above configuration parameters if you desire:
+    
+    AZURE_QUEUE_STORAGE_NAME=xxx
+    AZURE_QUEUE_KEY=xxx
+    AZURE_QUEUE_NAME=xxx
     
     'accountname'   => env('AZURE_QUEUE_STORAGE_NAME'),   
     'key'           => env('AZURE_QUEUE_KEY'),   
@@ -70,7 +74,7 @@ Use the normal Laravel Queue functionality as per the [documentation](http://lar
 Remember to update the default queue by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
 
 ## Change log
-[See changelog](CHANGELOG.md)
+Will be added once stuff starts changing
 
 Copyright © 2016 Steve Strugnell. Released under the `MIT License <docs/license.rst>`_.
 Based on [Alex Bouma's Laravel 4 package](https://github.com/stayallive/laravel-azure-blob-queue)  
