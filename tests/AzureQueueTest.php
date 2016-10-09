@@ -4,7 +4,6 @@ use MicrosoftAzure\Storage\Queue\Internal\IQueue;
 use MicrosoftAzure\Storage\Queue\Models\CreateMessageOptions;
 use MicrosoftAzure\Storage\Queue\Models\GetQueueMetadataResult;
 use MicrosoftAzure\Storage\Queue\Models\ListMessagesOptions;
-use MicrosoftAzure\Storage\Queue\Models\MicrosoftAzureQueueMessage;
 use Squigg\AzureQueueLaravel\AzureJob;
 use Squigg\AzureQueueLaravel\AzureQueue;
 
@@ -30,30 +29,12 @@ class AzureQueueTest extends TestCase
 
     /**
      * @param Mockery\CompositeExpectation $mock
-     * @param bool $empty
-     * @return Mockery\CompositeExpectation
+     * @param int $count
+     * @return \Mockery\CompositeExpectation
      */
-    protected function setListMessagesReturnExpectation($mock, $empty = false)
+    protected function setListMessagesReturnExpectation($mock, $count = 1)
     {
-        if ($empty) {
-            return $mock->andReturn(new class
-            {
-
-                public function getQueueMessages()
-                {
-                    return [];
-                }
-            });
-        }
-
-        return $mock->andReturn(new class
-        {
-
-            public function getQueueMessages()
-            {
-                return [new MicrosoftAzureQueueMessage()];
-            }
-        });
+        return $mock->andReturn(new ListMessagesResult($count));
     }
 
     /** @test */
@@ -75,7 +56,7 @@ class AzureQueueTest extends TestCase
     /** @test */
     public function it_returns_null_if_no_messages_to_pop()
     {
-        $this->setListMessagesReturnExpectation($this->azure->shouldReceive('listMessages')->once(), true);
+        $this->setListMessagesReturnExpectation($this->azure->shouldReceive('listMessages')->once(), 0);
 
         $message = $this->queue->pop('myqueue');
         $this->assertNull($message);
