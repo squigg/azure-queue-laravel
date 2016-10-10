@@ -79,7 +79,7 @@ class AzureQueue extends Queue implements QueueInterface
     /**
      * Push a new job onto the queue after a delay.
      *
-     * @param  int $delay
+     * @param  \DateTime|int $delay
      * @param  string $job
      * @param  mixed $data
      * @param  string $queue
@@ -91,7 +91,7 @@ class AzureQueue extends Queue implements QueueInterface
         $payload = $this->createPayload($job, $data);
 
         $options = new CreateMessageOptions();
-        $options->setVisibilityTimeoutInSeconds($delay);
+        $options->setVisibilityTimeoutInSeconds($this->getSeconds($delay));
 
         $this->azure->createMessage($this->getQueue($queue), $payload, $options);
     }

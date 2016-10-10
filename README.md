@@ -76,6 +76,5 @@ Remember to update the default queue by setting the `QUEUE_DRIVER` value in your
 ## Changelog
 Will be added once stuff starts changing.
 
-
 ## License
-Released under the `MIT License <docs/license.rst>`_. Based on [Alex Bouma's Laravel 4 package](https://github.com/stayallive/laravel-azure-blob-queue), updated for Laravel 5.
+Released under the MIT License. Based on [Alex Bouma's Laravel 4 package](https://github.com/stayallive/laravel-azure-blob-queue), updated for Laravel 5.
