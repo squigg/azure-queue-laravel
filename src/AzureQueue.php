@@ -79,7 +79,7 @@ class AzureQueue extends Queue implements QueueInterface
     /**
      * Push a new job onto the queue after a delay.
      *
-     * @param  int $delay
+     * @param  \DateTime|int $delay
      * @param  string $job
      * @param  mixed $data
      * @param  string $queue
@@ -91,7 +91,7 @@ class AzureQueue extends Queue implements QueueInterface
         $payload = $this->createPayload($job, $data);
 
         $options = new CreateMessageOptions();
-        $options->setVisibilityTimeoutInSeconds($delay);
+        $options->setVisibilityTimeoutInSeconds($this->getSeconds($delay));
 
         $this->azure->createMessage($this->getQueue($queue), $payload, $options);
     }
@@ -105,12 +105,15 @@ class AzureQueue extends Queue implements QueueInterface
      */
     public function pop($queue = null)
     {
+        $queue = $this->getQueue($queue);
+
         // As recommended in the API docs, first call listMessages to hide message from other code
         $listMessagesOptions = new ListMessagesOptions();
         $listMessagesOptions->setVisibilityTimeoutInSeconds($this->visibilityTimeout);
+        $listMessagesOptions->setNumberOfMessages(1);
 
         /** @var ListMessagesResult $listMessages */
-        $listMessages = $this->azure->listMessages($this->getQueue($queue), $listMessagesOptions);
+        $listMessages = $this->azure->listMessages($queue, $listMessagesOptions);
         $messages = $listMessages->getQueueMessages();
 
         if (count($messages) > 0) {

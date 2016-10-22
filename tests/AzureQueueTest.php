@@ -54,6 +54,16 @@ class AzureQueueTest extends TestCase
     }
 
     /** @test */
+    public function it_can_pop_message_from_queue_using_default()
+    {
+        $this->setListMessagesReturnExpectation($this->azure->shouldReceive('listMessages')->once());
+
+        $message = $this->queue->pop();
+        $this->assertInstanceOf(AzureJob::class, $message);
+        $this->assertEquals('myqueue', $message->getQueue());
+    }
+
+    /** @test */
     public function it_returns_null_if_no_messages_to_pop()
     {
         $this->setListMessagesReturnExpectation($this->azure->shouldReceive('listMessages')->once(), 0);
@@ -69,6 +79,20 @@ class AzureQueueTest extends TestCase
             $this->azure->shouldReceive('listMessages')->once()->withArgs(
                 function ($queue, ListMessagesOptions $options) {
                     return $queue == 'myqueue' && $options->getVisibilityTimeoutInSeconds() == 5;
+                }
+            )
+        );
+
+        $this->queue->pop('myqueue');
+    }
+
+    /** @test */
+    public function it_only_fetches_first_message()
+    {
+        $this->setListMessagesReturnExpectation(
+            $this->azure->shouldReceive('listMessages')->once()->withArgs(
+                function ($queue, ListMessagesOptions $options) {
+                    return $queue == 'myqueue' && $options->getNumberOfMessages() == 1;
                 }
             )
         );
