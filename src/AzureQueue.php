@@ -110,6 +110,7 @@ class AzureQueue extends Queue implements QueueInterface
         // As recommended in the API docs, first call listMessages to hide message from other code
         $listMessagesOptions = new ListMessagesOptions();
         $listMessagesOptions->setVisibilityTimeoutInSeconds($this->visibilityTimeout);
+        $listMessagesOptions->setNumberOfMessages(1);
 
         /** @var ListMessagesResult $listMessages */
         $listMessages = $this->azure->listMessages($queue, $listMessagesOptions);
