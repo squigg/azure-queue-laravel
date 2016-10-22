@@ -105,12 +105,14 @@ class AzureQueue extends Queue implements QueueInterface
      */
     public function pop($queue = null)
     {
+        $queue = $this->getQueue($queue);
+
         // As recommended in the API docs, first call listMessages to hide message from other code
         $listMessagesOptions = new ListMessagesOptions();
         $listMessagesOptions->setVisibilityTimeoutInSeconds($this->visibilityTimeout);
 
         /** @var ListMessagesResult $listMessages */
-        $listMessages = $this->azure->listMessages($this->getQueue($queue), $listMessagesOptions);
+        $listMessages = $this->azure->listMessages($queue, $listMessagesOptions);
         $messages = $listMessages->getQueueMessages();
 
         if (count($messages) > 0) {
