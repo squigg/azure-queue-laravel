@@ -9,7 +9,6 @@ use Squigg\AzureQueueLaravel\AzureQueue;
 
 class AzureQueueTest extends TestCase
 {
-
     /**
      * @var \Mockery\Mock
      */
@@ -40,7 +39,10 @@ class AzureQueueTest extends TestCase
     /** @test */
     public function it_can_push_message_to_queue()
     {
-        $this->azure->shouldReceive('createMessage')->once()->withArgs(["myqueue", '{"job":"job","data":"data"}']);
+        $this->azure->shouldReceive('createMessage')->once()->withArgs([
+            "myqueue",
+            '{"displayName":"job","job":"job","maxTries":null,"timeout":null,"data":"data"}'
+        ]);
         $this->queue->push('job', 'data');
     }
 
@@ -111,7 +113,7 @@ class AzureQueueTest extends TestCase
     {
         $this->azure->shouldReceive('createMessage')->once()->withArgs(
             function ($queue, $payload, CreateMessageOptions $options) {
-                return $queue == 'myqueue' && $payload == '{"job":"job","data":"data"}' && $options->getVisibilityTimeoutInSeconds() == 10;
+                return $queue == 'myqueue' && $payload == '{"displayName":"job","job":"job","maxTries":null,"timeout":null,"data":"data"}' && $options->getVisibilityTimeoutInSeconds() == 10;
             }
         );
 

@@ -51,9 +51,9 @@ class AzureQueue extends Queue implements QueueInterface
     /**
      * Push a new job onto the queue.
      *
-     * @param  string $job
-     * @param  mixed $data
-     * @param  string $queue
+     * @param string $job
+     * @param mixed $data
+     * @param string $queue
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class AzureQueue extends Queue implements QueueInterface
      * @param  string $queue
      * @param  array $options
      *
-     * @return mixed
+     * @return void
      */
     public function pushRaw($payload, $queue = null, array $options = [])
     {
@@ -91,7 +91,7 @@ class AzureQueue extends Queue implements QueueInterface
         $payload = $this->createPayload($job, $data);
 
         $options = new CreateMessageOptions();
-        $options->setVisibilityTimeoutInSeconds($this->getSeconds($delay));
+        $options->setVisibilityTimeoutInSeconds($this->secondsUntil($delay));
 
         $this->azure->createMessage($this->getQueue($queue), $payload, $options);
     }
@@ -117,7 +117,7 @@ class AzureQueue extends Queue implements QueueInterface
         $messages = $listMessages->getQueueMessages();
 
         if (count($messages) > 0) {
-            return new AzureJob($this->container, $this->azure, $messages[0], $queue);
+            return new AzureJob($this->container, $this->azure, $messages[0], $this->connectionName, $queue);
         }
 
         return null;

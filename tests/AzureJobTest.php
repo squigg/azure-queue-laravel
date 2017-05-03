@@ -42,7 +42,7 @@ class AzureJobTest extends TestCase
         $this->message->setMessageText('{"abcd":"efgh"}');
         $this->message->setDequeueCount(2);
 
-        $this->job = new AzureJob($this->app, $this->azure, $this->message, 'myqueue');
+        $this->job = new AzureJob($this->app, $this->azure, $this->message, 'myconnection', 'myqueue');
     }
 
     /** @test */

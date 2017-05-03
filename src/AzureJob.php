@@ -22,7 +22,7 @@ class AzureJob extends Job implements JobContract
     /**
      * The Azure QueueMessage instance.
      *
-     * @var QueueMessage
+     * @var MicrosoftAzureQueueMessage
      */
     protected $job;
 
@@ -39,16 +39,21 @@ class AzureJob extends Job implements JobContract
      * @param \Illuminate\Container\Container $container
      * @param IQueue $azure
      * @param MicrosoftAzureQueueMessage $job
-     * @param  string $queue
+     * @param string $connectionName
+     * @param string $queue
      *
-     * @return \Squigg\AzureQueueLaravel\AzureJob
      */
-    public function __construct(Container $container, IQueue $azure, MicrosoftAzureQueueMessage $job, $queue)
+    public function __construct(Container $container,
+        IQueue $azure,
+        MicrosoftAzureQueueMessage $job,
+        $connectionName,
+        $queue)
     {
         $this->azure = $azure;
         $this->job = $job;
         $this->queue = $queue;
         $this->container = $container;
+        $this->connectionName = $connectionName;
     }
 
     /**
@@ -65,7 +70,7 @@ class AzureJob extends Job implements JobContract
     /**
      * Release the job back into the queue.
      *
-     * @param  int $delay
+     * @param int $delay
      *
      * @return void
      */
