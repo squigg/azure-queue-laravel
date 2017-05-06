@@ -17,7 +17,7 @@
   "require": {
     "php": ">=5.6.0",
     "illuminate/queue": "5.4.*",
-    "microsoft/azure-storage": "^0.14.0"
+    "microsoft/azure-storage": "~0.14.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",
