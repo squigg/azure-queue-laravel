@@ -33,7 +33,7 @@ Require this package in your `composer.json`. The version numbers will follow La
     composer require squigg/azure-queue-laravel:5.4.*
     
 Add the following pear repository in your `composer.json` file required for the Microsoft Azure SDK
-(not required for 5.4.x which uses the new `microsoft/windowsazure` package):
+(not required for 5.4.x which uses the new `microsoft/azure-storage` package):
   
     "repositories": [
         {
