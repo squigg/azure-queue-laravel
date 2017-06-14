@@ -49,11 +49,11 @@ composer update
 ```
 
 ## Configuration
-Add the ServiceProvider to your `providers` array in `app/config/app.php`:
+Add the ServiceProvider to your `providers` array in `config/app.php`:
 
 	'Squigg\AzureQueueLaravel\AzureQueueServiceProvider',
 
-add the following to the `connection` array in `app/config/queue.php`, set your `default` connection to `azure` and
+add the following to the `connection` array in `config/queue.php`, set your `default` connection to `azure` and
 fill out your own connection data from the Azure Management portal:
 
 	'azure' => [
