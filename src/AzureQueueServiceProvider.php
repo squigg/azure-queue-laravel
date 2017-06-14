@@ -9,6 +9,15 @@ class AzureQueueServiceProvider extends ServiceProvider
 {
 
     /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+    }
+
+    /**
      * Bootstrap any application services.
      *
      * @return void
@@ -22,5 +31,4 @@ class AzureQueueServiceProvider extends ServiceProvider
             return new AzureConnector;
         });
     }
-
 }
