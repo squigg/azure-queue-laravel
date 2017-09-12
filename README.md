@@ -11,14 +11,14 @@ PHP Laravel 5 Queue Driver package to support Microsoft Azure Storage Queues
 
 ## Prerequisites
 
-- PHP 5.6+
-- Laravel 5.2, 5.3 and 5.4 (not tested on previous versions)
+- PHP 5.6+, PHP7+ for Laravel 5.5+
+- Laravel 5.2, 5.3, 5.4 and 5.5 (not tested on previous versions)
 - Microsoft Azure Storage account and API key
 - Queue container created through Azure Portal or via Azure CLI / PowerShell
 
 ## Installation
 
-### Install by composer
+### Install using composer
 You can find this library on [Packagist](https://packagist.org/packages/squigg/azure-queue-laravel).
 
 Require this package in your `composer.json`. The version numbers will follow Laravel.
@@ -31,9 +31,12 @@ Require this package in your `composer.json`. The version numbers will follow La
 #### Laravel 5.4.x
     "squigg/azure-queue-laravel": "5.4.*"
     composer require squigg/azure-queue-laravel:5.4.*
+#### Laravel 5.5.x
+    "squigg/azure-queue-laravel": "5.5.*"
+    composer require squigg/azure-queue-laravel:5.5.*
     
-Add the following pear repository in your `composer.json` file required for the Microsoft Azure SDK
-(not required for 5.4.x which uses the new `microsoft/azure-storage` package):
+For versions 5.3 and older, add the following pear repository in your `composer.json` file
+required for the Microsoft Azure SDK (v5.4+ uses the new `microsoft/azure-storage` package instead):
   
     "repositories": [
         {
@@ -53,7 +56,7 @@ Add the ServiceProvider to your `providers` array in `config/app.php`:
 
 	'Squigg\AzureQueueLaravel\AzureQueueServiceProvider',
 
-add the following to the `connection` array in `config/queue.php`, set your `default` connection to `azure` and
+Add the following to the `connection` array in `config/queue.php`, set your `default` connection to `azure` and
 fill out your own connection data from the Azure Management portal:
 
 	'azure' => [
@@ -64,6 +67,8 @@ fill out your own connection data from the Azure Management portal:
         'queue'         => '',              // Queue container name
         'timeout'       => 60               // Timeout (seconds) before a job is released back to the queue
     ],
+
+Update the default queue used by Laravel by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
 
 You can add environment variables into your `.env` file to set the above configuration parameters if you desire:
     
@@ -83,7 +88,8 @@ Use the normal Laravel Queue functionality as per the [documentation](http://lar
 Remember to update the default queue by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
 
 ## Changelog
-Will be added once stuff starts changing.
+2017-09-11 - V5.5 - Support Laravel 5.5 and PHP7+ only. Update Azure Storage API to 0.18
+2017-09-11 - V5.4 - Update Azure Storage API to 0.15 (no breaking changes)
 
 ## License
 Released under the MIT License. Based on [Alex Bouma's Laravel 4 package](https://github.com/stayallive/laravel-azure-blob-queue), updated for Laravel 5.

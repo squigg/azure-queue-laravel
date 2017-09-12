@@ -1,7 +1,7 @@
 <?php
 
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
-use MicrosoftAzure\Storage\Queue\Models\MicrosoftAzureQueueMessage;
+use MicrosoftAzure\Storage\Queue\Models\QueueMessage;
 use Squigg\AzureQueueLaravel\AzureJob;
 use Squigg\AzureQueueLaravel\AzureQueue;
 
@@ -19,7 +19,7 @@ class AzureJobTest extends TestCase
     protected $queue;
 
     /**
-     * @var MicrosoftAzureQueueMessage
+     * @var QueueMessage
      */
     protected $message;
 
@@ -36,7 +36,7 @@ class AzureJobTest extends TestCase
         $this->queue = new AzureQueue($this->azure, 'myqueue', 5);
         $this->queue->setContainer($this->app);
 
-        $this->message = new MicrosoftAzureQueueMessage();
+        $this->message = new QueueMessage();
         $this->message->setMessageId('1234');
         $this->message->setPopReceipt('9876');
         $this->message->setMessageText('{"abcd":"efgh"}');

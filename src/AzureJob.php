@@ -6,7 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
-use MicrosoftAzure\Storage\Queue\Models\MicrosoftAzureQueueMessage;
+use MicrosoftAzure\Storage\Queue\Models\QueueMessage;
 use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
 class AzureJob extends Job implements JobContract
@@ -22,7 +22,7 @@ class AzureJob extends Job implements JobContract
     /**
      * The Azure QueueMessage instance.
      *
-     * @var MicrosoftAzureQueueMessage
+     * @var QueueMessage
      */
     protected $job;
 
@@ -38,14 +38,14 @@ class AzureJob extends Job implements JobContract
      *
      * @param \Illuminate\Container\Container $container
      * @param IQueue $azure
-     * @param MicrosoftAzureQueueMessage $job
+     * @param QueueMessage $job
      * @param string $connectionName
      * @param string $queue
      *
      */
     public function __construct(Container $container,
         IQueue $azure,
-        MicrosoftAzureQueueMessage $job,
+        QueueMessage $job,
         $connectionName,
         $queue)
     {
@@ -114,7 +114,7 @@ class AzureJob extends Job implements JobContract
     /**
      * Get the underlying raw Azure job.
      *
-     * @return MicrosoftAzureQueueMessage
+     * @return QueueMessage
      */
     public function getAzureJob()
     {

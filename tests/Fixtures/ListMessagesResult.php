@@ -1,5 +1,5 @@
 <?php
-use MicrosoftAzure\Storage\Queue\Models\MicrosoftAzureQueueMessage;
+use MicrosoftAzure\Storage\Queue\Models\QueueMessage;
 
 /**
  * Created by PhpStorm.
@@ -27,6 +27,6 @@ class ListMessagesResult
     public function getQueueMessages()
     {
         if ($this->count == 0) return [];
-        return array_fill(0, $this->count, new MicrosoftAzureQueueMessage());
+        return array_fill(0, $this->count, new QueueMessage());
     }
 }
