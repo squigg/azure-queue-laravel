@@ -18,7 +18,7 @@
   "require": {
     "php": ">=7.0",
     "illuminate/queue": "5.5.*",
-    "microsoft/azure-storage": "~0.18.0"
+    "microsoft/azure-storage": "~0.19.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~6.0",
@@ -31,5 +31,12 @@
       "Squigg\\AzureQueueLaravel\\": "src/"
     }
   },
-  "minimum-stability": "stable"
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Squigg\\AzureQueueLaravel\\AzureQueueServiceProvider"
+      ]
+    }
+  }
 }
