@@ -62,7 +62,7 @@ If you are not using Laravel auto package discovery, add the ServiceProvider to 
 	'Squigg\AzureQueueLaravel\AzureQueueServiceProvider',
 
 #### Add Azure queue configuration
-Add the following to the `connection` array in `config/queue.php`, and
+Add the following to the `connections` array in `config/queue.php`, and
 fill out your own connection data from the Azure Management portal:
 
 	'azure' => [
