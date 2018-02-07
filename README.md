@@ -12,7 +12,7 @@ PHP Laravel 5 Queue Driver package to support Microsoft Azure Storage Queues
 ## Prerequisites
 
 - PHP 5.6+, PHP7+ for Laravel 5.5+
-- Laravel 5.2, 5.3, 5.4 and 5.5 (not tested on previous versions)
+- Laravel 5.2 - 5.6 (not tested on previous versions)
 - Microsoft Azure Storage account and API key
 - Queue container created through Azure Portal or via Azure CLI / PowerShell
 
@@ -34,9 +34,13 @@ Require this package in your `composer.json`. The version numbers will follow La
 #### Laravel 5.5.x
     "squigg/azure-queue-laravel": "5.5.*"
     composer require squigg/azure-queue-laravel:5.5.*
+#### Laravel 5.6.x
+    "squigg/azure-queue-laravel": "5.6.*"
+    composer require squigg/azure-queue-laravel:5.6.*
     
-For versions 5.3 and older, add the following pear repository in your `composer.json` file
-required for the Microsoft Azure SDK (v5.4+ uses the new `microsoft/azure-storage` package instead):
+##### For versions 5.3 and older only
+Add the following pear repository in your `composer.json` file required for the Microsoft Azure SDK
+(v5.4+ uses the `microsoft/azure-storage` package instead, and v5.6+ uses `microsoft/azure-storage-queue`):
   
     "repositories": [
         {
@@ -88,7 +92,11 @@ Use the normal Laravel Queue functionality as per the [documentation](http://lar
 Remember to update the default queue by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
 
 ## Changelog
+2018-02-07 - V5.6 - Switch to GA version of Microsoft Azure Storage PHP API. Support Laravel 5.6 (composer.json changes
+only). Update dev dependencies to latest versions.
+
 2017-09-11 - V5.5 - Support Laravel 5.5 and PHP7+ only. Update Azure Storage API to 0.18
+
 2017-09-11 - V5.4 - Update Azure Storage API to 0.15 (no breaking changes)
 
 ## License
