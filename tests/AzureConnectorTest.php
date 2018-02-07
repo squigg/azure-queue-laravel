@@ -1,7 +1,7 @@
 <?php
 
-use MicrosoftAzure\Storage\Common\ServicesBuilder;
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
+use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 use Squigg\AzureQueueLaravel\AzureConnector;
 use Squigg\AzureQueueLaravel\AzureQueue;
 
@@ -16,14 +16,14 @@ class AzureConnectorTest extends TestCase
     /**
      * @var \Mockery\Mock
      */
-    protected $servicesBuilder;
+    protected $queueRestProxy;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->connector = new AzureConnector();
-        $this->servicesBuilder = Mockery::mock('alias:' . ServicesBuilder::class);
+        $this->queueRestProxy = Mockery::mock('alias:' . QueueRestProxy::class);
     }
 
     /** @test */
@@ -40,7 +40,7 @@ class AzureConnectorTest extends TestCase
         $connectionString = 'DefaultEndpointsProtocol=' . $config['protocol'] . ';AccountName=' . $config['accountname'] . ';AccountKey=' . $config['key'];
         $queueProxy = Mockery::mock(IQueue::class);
 
-        $this->servicesBuilder->shouldReceive('getInstance->createQueueService')->once()->with($connectionString)->andReturn($queueProxy);
+        $this->queueRestProxy->shouldReceive('createQueueService')->once()->with($connectionString)->andReturn($queueProxy);
 
         /** @var AzureQueue $azureQueue */
         $azureQueue = $this->connector->connect($config);

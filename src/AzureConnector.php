@@ -3,7 +3,7 @@
 namespace Squigg\AzureQueueLaravel;
 
 use Illuminate\Queue\Connectors\ConnectorInterface;
-use MicrosoftAzure\Storage\Common\ServicesBuilder;
+use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
 class AzureConnector implements ConnectorInterface
 {
@@ -18,7 +18,7 @@ class AzureConnector implements ConnectorInterface
     public function connect(array $config)
     {
         $connectionString = 'DefaultEndpointsProtocol=' . $config['protocol'] . ';AccountName=' . $config['accountname'] . ';AccountKey=' . $config['key'];
-        $queueRestProxy = ServicesBuilder::getInstance()->createQueueService($connectionString);
+        $queueRestProxy = QueueRestProxy::createQueueService($connectionString);
 
         return new AzureQueue($queueRestProxy, $config['queue'], $config['timeout']);
     }
