@@ -56,35 +56,34 @@ composer update
 ```
 
 ## Configuration
-Add the ServiceProvider to your `providers` array in `config/app.php`:
+#### Add Provider
+If you are not using Laravel auto package discovery, add the ServiceProvider to your `providers` array in `config/app.php`:
 
 	'Squigg\AzureQueueLaravel\AzureQueueServiceProvider',
 
-Add the following to the `connection` array in `config/queue.php`, set your `default` connection to `azure` and
+#### Add Azure queue configuration
+Add the following to the `connection` array in `config/queue.php`, and
 fill out your own connection data from the Azure Management portal:
 
 	'azure' => [
-        'driver'        => 'azure',         // Leave this as-is
-        'protocol'      => 'https',         // https or http
-        'accountname'   => '',              // Azure storage account name
-        'key'           => '',              // Access key for storage account
-        'queue'         => '',              // Queue container name
-        'timeout'       => 60               // Timeout (seconds) before a job is released back to the queue
+        'driver'        => 'azure',                         // Leave this as-is
+        'protocol'      => 'https',                         // https or http
+        'accountname'   => env('AZURE_QUEUE_STORAGE_NAME'), // Azure storage account name
+        'key'           => env('AZURE_QUEUE_KEY'),          // Access key for storage account
+        'queue'         => env('AZURE_QUEUE_NAME'),         // Queue container name
+        'timeout'       => 60                               // Timeout (seconds) before a job is released back to the queue
     ],
 
-Update the default queue used by Laravel by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
-
-You can add environment variables into your `.env` file to set the above configuration parameters if you desire:
+Add environment variables into your `.env` file to set the above configuration parameters if you prefer:
     
     AZURE_QUEUE_STORAGE_NAME=xxx
     AZURE_QUEUE_KEY=xxx
     AZURE_QUEUE_NAME=xxx
-
-And then update the config file like below:
     
-    'accountname'   => env('AZURE_QUEUE_STORAGE_NAME'),   
-    'key'           => env('AZURE_QUEUE_KEY'),   
-    'queue'         => env('AZURE_QUEUE_NAME'),   
+#### Set the default Laravel queue
+Update the default queue used by Laravel by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
+
+    QUEUE_DRIVER=azure
 
 ## Usage
 Use the normal Laravel Queue functionality as per the [documentation](http://laravel.com/docs/queues).
