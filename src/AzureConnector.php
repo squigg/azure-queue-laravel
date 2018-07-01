@@ -18,6 +18,11 @@ class AzureConnector implements ConnectorInterface
     public function connect(array $config)
     {
         $connectionString = 'DefaultEndpointsProtocol=' . $config['protocol'] . ';AccountName=' . $config['accountname'] . ';AccountKey=' . $config['key'];
+
+        if (isset($config['endpoint']) && $config['endpoint'] !== "") {
+            $connectionString .= ";EndpointSuffix=" . $config['endpoint'];
+        }
+
         $queueRestProxy = QueueRestProxy::createQueueService($connectionString);
 
         return new AzureQueue($queueRestProxy, $config['queue'], $config['timeout']);
