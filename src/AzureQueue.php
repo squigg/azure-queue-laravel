@@ -15,7 +15,7 @@ class AzureQueue extends Queue implements QueueInterface
 {
 
     /**
-     * The Azure IServiceBus instance.
+     * The Azure IQueue instance.
      *
      * @var QueueRestProxy
      */
@@ -29,7 +29,7 @@ class AzureQueue extends Queue implements QueueInterface
     protected $default;
 
     /**
-     * The value in seconds that the queue item is invivisble to other requestors
+     * The value in seconds that the queue item is invisible to other requestors
      * @var
      */
     protected $visibilityTimeout;
