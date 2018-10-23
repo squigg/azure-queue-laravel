@@ -64,6 +64,10 @@ If you are not using Laravel auto package discovery, add the ServiceProvider to 
 
 	'Squigg\AzureQueueLaravel\AzureQueueServiceProvider',
 
+For Lumen (5.x) you will need to add the provider to `bootstrap/app.php`:
+
+        $app->register(Squigg\AzureQueueLaravel\AzureQueueServiceProvider::class);
+
 #### Add Azure queue configuration
 Add the following to the `connections` array in `config/queue.php`, and
 fill out your own connection data from the Azure Management portal:
