@@ -59,7 +59,7 @@ class AzureQueue extends Queue implements QueueInterface
      */
     public function push($job, $data = '', $queue = null)
     {
-        $this->pushRaw($this->createPayload($job, $data), $queue);
+        $this->pushRaw($this->createPayload($job, $queue, $data), $queue);
     }
 
     /**
@@ -88,7 +88,7 @@ class AzureQueue extends Queue implements QueueInterface
      */
     public function later($delay, $job, $data = '', $queue = null)
     {
-        $payload = $this->createPayload($job, $data);
+        $payload = $this->createPayload($job, $queue, $data);
 
         $options = new CreateMessageOptions();
         $options->setVisibilityTimeoutInSeconds($this->secondsUntil($delay));
