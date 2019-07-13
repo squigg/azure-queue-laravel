@@ -15,7 +15,7 @@ abstract class TestCase extends Orchestra\Testbench\TestCase
         return [];
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         $this->addToAssertionCount(Mockery::getContainer()->mockery_getExpectationCount());
         Mockery::close();

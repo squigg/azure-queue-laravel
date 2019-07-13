@@ -18,18 +18,18 @@ class AzureQueueTest extends TestCase
      */
     protected $queue;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->azure = Mockery::mock(\MicrosoftAzure\Storage\Queue\Internal\IQueue::class);
+        $this->azure = Mockery::mock(IQueue::class);
         $this->queue = new AzureQueue($this->azure, 'myqueue', 5);
         $this->queue->setContainer($this->app);
     }
 
     /**
-     * @param Mockery\CompositeExpectation $mock
+     * @param Mockery\Expectation $mock
      * @param int $count
-     * @return \Mockery\CompositeExpectation
+     * @return Mockery\Expectation
      */
     protected function setListMessagesReturnExpectation($mock, $count = 1)
     {
@@ -41,7 +41,7 @@ class AzureQueueTest extends TestCase
     {
         $this->azure->shouldReceive('createMessage')->once()->withArgs([
             "myqueue",
-            '{"displayName":"job","job":"job","maxTries":null,"timeout":null,"data":"data"}'
+            '{"displayName":"job","job":"job","maxTries":null,"delay":null,"timeout":null,"data":"data"}'
         ]);
         $this->queue->push('job', 'data');
     }
@@ -113,7 +113,7 @@ class AzureQueueTest extends TestCase
     {
         $this->azure->shouldReceive('createMessage')->once()->withArgs(
             function ($queue, $payload, CreateMessageOptions $options) {
-                return $queue == 'myqueue' && $payload == '{"displayName":"job","job":"job","maxTries":null,"timeout":null,"data":"data"}' && $options->getVisibilityTimeoutInSeconds() == 10;
+                return $queue == 'myqueue' && $payload == '{"displayName":"job","job":"job","maxTries":null,"delay":null,"timeout":null,"data":"data"}' && $options->getVisibilityTimeoutInSeconds() == 10;
             }
         );
 

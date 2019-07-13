@@ -28,7 +28,7 @@ class AzureJobTest extends TestCase
      */
     protected $job;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
