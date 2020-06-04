@@ -36,7 +36,7 @@ class AzureJob extends Job implements JobContract
     /**
      * Create a new job instance.
      *
-     * @param \Illuminate\Container\Container $container
+     * @param Container $container
      * @param IQueue $azure
      * @param QueueMessage $job
      * @param string $connectionName
@@ -94,7 +94,7 @@ class AzureJob extends Job implements JobContract
     /**
      * Get the IoC container instance.
      *
-     * @return \Illuminate\Container\Container
+     * @return Container
      */
     public function getContainer()
     {

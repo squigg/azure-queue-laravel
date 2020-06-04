@@ -32,7 +32,7 @@ class AzureJobTest extends TestCase
     {
         parent::setUp();
 
-        $this->azure = Mockery::mock(\MicrosoftAzure\Storage\Queue\Internal\IQueue::class);
+        $this->azure = Mockery::mock(IQueue::class);
         $this->queue = new AzureQueue($this->azure, 'myqueue', 5);
         $this->queue->setContainer($this->app);
 
