@@ -9,6 +9,7 @@ use Squigg\AzureQueueLaravel\AzureQueue;
 
 class AzureQueueTest extends TestCase
 {
+
     /**
      * @var \Mockery\Mock
      */
@@ -39,11 +40,11 @@ class AzureQueueTest extends TestCase
     /** @test */
     public function it_can_push_message_to_queue()
     {
-        $this->azure->shouldReceive('createMessage')->once()->withArgs([
-            "myqueue",
-            '{"displayName":"job","job":"job","maxTries":null,"delay":null,"timeout":null,"data":"data"}'
-        ]);
-        $this->queue->push('job', 'data');
+        $this->azure->shouldReceive('createMessage')->once()->withArgs(function ($queue, $payload) {
+            $payload = json_decode($payload, true);
+            return $queue == "myqueue" && $payload['displayName'] == 'foojob' && $payload['job'] == 'foojob' && $payload['data'] == 'bardata';
+        });
+        $this->queue->push('foojob', 'bardata');
     }
 
     /** @test */
@@ -77,13 +78,11 @@ class AzureQueueTest extends TestCase
     /** @test */
     public function it_passes_visibility_timeout_set_in_config()
     {
-        $this->setListMessagesReturnExpectation(
-            $this->azure->shouldReceive('listMessages')->once()->withArgs(
-                function ($queue, ListMessagesOptions $options) {
-                    return $queue == 'myqueue' && $options->getVisibilityTimeoutInSeconds() == 5;
-                }
-            )
-        );
+        $mockClient = $this->azure->shouldReceive('listMessages')->once()->withArgs(function ($queue,
+            ListMessagesOptions $options) {
+            return $queue == 'myqueue' && $options->getVisibilityTimeoutInSeconds() == 5;
+        });
+        $this->setListMessagesReturnExpectation($mockClient);
 
         $this->queue->pop('myqueue');
     }
@@ -91,14 +90,11 @@ class AzureQueueTest extends TestCase
     /** @test */
     public function it_only_fetches_first_message()
     {
-        $this->setListMessagesReturnExpectation(
-            $this->azure->shouldReceive('listMessages')->once()->withArgs(
-                function ($queue, ListMessagesOptions $options) {
-                    return $queue == 'myqueue' && $options->getNumberOfMessages() == 1;
-                }
-            )
-        );
-
+        $mockClient = $this->azure->shouldReceive('listMessages')->once()->withArgs(function ($queue,
+            ListMessagesOptions $options) {
+            return $queue == 'myqueue' && $options->getNumberOfMessages() == 1;
+        });
+        $this->setListMessagesReturnExpectation($mockClient);
         $this->queue->pop('myqueue');
     }
 
@@ -111,13 +107,14 @@ class AzureQueueTest extends TestCase
     /** @test */
     public function it_can_queue_a_job_for_later()
     {
-        $this->azure->shouldReceive('createMessage')->once()->withArgs(
-            function ($queue, $payload, CreateMessageOptions $options) {
-                return $queue == 'myqueue' && $payload == '{"displayName":"job","job":"job","maxTries":null,"delay":null,"timeout":null,"data":"data"}' && $options->getVisibilityTimeoutInSeconds() == 10;
-            }
-        );
+        $this->azure->shouldReceive('createMessage')->once()->withArgs(function ($queue,
+            $payload,
+            CreateMessageOptions $options) {
+            $payload = json_decode($payload, true);
+            return $queue == "myqueue" && $payload['displayName'] == 'foojob' && $payload['job'] == 'foojob' && $payload['data'] == 'bardata' && $options->getVisibilityTimeoutInSeconds() == 10;
+        });
 
-        $this->queue->later(10, 'job', 'data', 'myqueue');
+        $this->queue->later(10, 'foojob', 'bardata', 'myqueue');
     }
 
     /** @test */
