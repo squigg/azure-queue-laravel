@@ -73,7 +73,11 @@ class AzureQueue extends Queue implements QueueInterface
      */
     public function pushRaw($payload, $queue = null, array $options = [])
     {
-        $this->azure->createMessage($this->getQueue($queue), $payload);
+        if(env(AZURE_BASE64_ENCODE)) {
+            $this->azure->createMessage($this->getQueue($queue), base64_encode($payload));
+        } else {
+            $this->azure->createMessage($this->getQueue($queue), $payload);
+        }
     }
 
     /**
