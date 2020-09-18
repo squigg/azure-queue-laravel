@@ -95,7 +95,7 @@ fill out your own connection data from the Azure Management portal:
         'accountname'   => env('AZURE_QUEUE_STORAGE_NAME'),     // Azure storage account name
         'key'           => env('AZURE_QUEUE_KEY'),              // Access key for storage account
         'queue'         => env('AZURE_QUEUE_NAME'),             // Queue container name
-        'timeout'       => 60                                   // Seconds before a job is released back to the queue
+        'timeout'       => 60,                                  // Seconds before a job is released back to the queue
         'endpoint'      => env('AZURE_QUEUE_ENDPOINTSUFFIX'),   // Optional endpoint suffix if different from core.windows.net
     ],
 
