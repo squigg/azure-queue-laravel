@@ -107,9 +107,9 @@ Add environment variables into your `.env` file to set the above configuration p
     AZURE_QUEUE_ENDPOINTSUFFIX=xxx
     
 #### Set the default Laravel queue
-Update the default queue used by Laravel by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
+Update the default queue used by Laravel by setting the `QUEUE_CONNECTION` value in your `.env` file to `azure`.
 
-    QUEUE_DRIVER=azure
+    QUEUE_CONNECTION=azure
 
 ## Usage
 Use the normal Laravel Queue functionality as per the [documentation](http://laravel.com/docs/queues).
