@@ -16,7 +16,7 @@
     }
   ],
   "require": {
-    "php": "^7.3",
+    "php": "^7.3|^8.0",
     "illuminate/queue": "^8.0",
     "microsoft/azure-storage-queue": "~1.3.0"
   },
