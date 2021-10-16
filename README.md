@@ -26,20 +26,6 @@ or [PowerShell](https://docs.microsoft.com/en-us/azure/storage/queues/storage-po
 ### Install using composer
 You can find this library on [Packagist](https://packagist.org/packages/squigg/azure-queue-laravel).
 
-#### Important notes for Laravel 8
-Laravel 8 has moved to Guzzle 7.x, but the upstream dependency `microsoft/azure-storage-queue` from this package still uses Guzzle 6.
-This will cause `composer` to fail during dependency resolution.
-
-Tests so far have not identified any impacting breaking changes between Guzzle 6 and 7, so while we wait for the upstream package to be updated, you can work around this issue by adding/updating your root
-`composer.json` file to use an inline alias for `guzzlehttp/guzzle`:
-```
-"guzzlehttp/guzzle": "7.0.1 as 6.5.5"
-```
-Or run this command:
-```
-composer require guzzlehttp/guzzle:"7.0.1 as 6.5.5" 
-```
-#### Installation
 Require this package in your `composer.json`. The version numbers will follow Laravel.
 
 #### Laravel 8.x
@@ -134,6 +120,8 @@ Use the normal Laravel Queue functionality as per the [documentation](http://lar
 Remember to update the default queue by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
 
 ## Changelog
+
+2021-10-16 - V8.1 - Support for PHP 8
 
 2020-09-19 - V8.0 - Support for Laravel 8.x (composer dependency and test refactoring only)
 
