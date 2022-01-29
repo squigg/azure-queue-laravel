@@ -98,6 +98,7 @@ fill out your own connection data from the Azure Management portal:
         'queue'         => env('AZURE_QUEUE_NAME'),             // Queue container name
         'timeout'       => 60,                                  // Seconds before a job is released back to the queue
         'endpoint'      => env('AZURE_QUEUE_ENDPOINTSUFFIX'),   // Optional endpoint suffix if different from core.windows.net
+        'queue_endpoint'=> env('AZURE_QUEUE_ENDPOINT'),         // Optional endpoint for custom addresses like http://localhost/my_storage_name
     ],
 
 Add environment variables into your `.env` file to set the above configuration parameters:
@@ -106,6 +107,7 @@ Add environment variables into your `.env` file to set the above configuration p
     AZURE_QUEUE_KEY=xxx
     AZURE_QUEUE_NAME=xxx
     AZURE_QUEUE_ENDPOINTSUFFIX=xxx
+    AZURE_QUEUE_ENDPOINT=xxx
     
 #### Set the default Laravel queue
 Update the default queue used by Laravel by setting the `QUEUE_CONNECTION` value in your `.env` file to `azure`.

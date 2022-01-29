@@ -23,6 +23,10 @@ class AzureConnector implements ConnectorInterface
             $connectionString .= ";EndpointSuffix=" . $config['endpoint'];
         }
 
+        if (isset($config['queue_endpoint']) && $config['queue_endpoint'] !== "") {
+            $connectionString .= ";QueueEndpoint=" . $config['queue_endpoint'];
+        }
+
         $queueRestProxy = QueueRestProxy::createQueueService($connectionString);
 
         return new AzureQueue($queueRestProxy, $config['queue'], $config['timeout']);

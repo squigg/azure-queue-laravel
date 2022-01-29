@@ -62,4 +62,16 @@ class AzureConnectorTest extends TestCase
         $this->connector->connect($this->config);
     }
 
+    /** @test */
+    public function it_can_create_azure_queue_with_queue_endpoint()
+    {
+        $this->config['queue_endpoint'] = 'http://localhost:10001/test';
+
+        $connectionString = 'DefaultEndpointsProtocol=https;AccountName=foo;AccountKey=bar;QueueEndpoint=http://localhost:10001/test';
+        $queueProxy = Mockery::mock(IQueue::class);
+        $this->queueRestProxy->shouldReceive('createQueueService')->once()->with($connectionString)->andReturn($queueProxy);
+
+        /** @var AzureQueue $azureQueue */
+        $this->connector->connect($this->config);
+    }
 }
