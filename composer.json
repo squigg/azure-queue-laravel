@@ -27,6 +27,9 @@
     "php-coveralls/php-coveralls": "~2.0",
     "ext-json": "*"
   },
+  "scripts": {
+    "test": "phpunit --coverage-clover build/logs/clover.xml && php-coveralls -v"
+  },
   "autoload": {
     "psr-4": {
       "Squigg\\AzureQueueLaravel\\": "src/"
