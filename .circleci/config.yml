@@ -18,5 +18,5 @@ workflows:
                 name: Install PCOV
           post-steps:
             - run:
-                command: vendor/bin/php-coveralls --coverage_clover=clover.xml -v
+                command: vendor/bin/php-coveralls --coverage_clover=clover.xml --json_path clover.json -v
                 name: Upload Coverage
