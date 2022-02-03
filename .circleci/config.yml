@@ -14,6 +14,9 @@ workflows:
               version: ["7.3", "7.4", "8.0", "8.1"]
           pre-steps:
             - run:
-                command: |-
-                  sudo pecl install pcov
+                command: sudo pecl install pcov
                 name: Install PCOV
+          post-steps:
+            - run:
+                command: php-coveralls --coverage_clover=clover.xml -v
+                name: Upload Coverage
