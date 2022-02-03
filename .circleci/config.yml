@@ -15,6 +15,6 @@ workflows:
           pre-steps:
             - run:
                 command: |-
-                  pecl install pcov
-                  docker-php-ext-enable pcov
+                  sudo pecl install pcov
+                  sudo docker-php-ext-enable pcov
                 name: Install PCOV
