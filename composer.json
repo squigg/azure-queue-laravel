@@ -28,7 +28,7 @@
     "ext-json": "*"
   },
   "scripts": {
-    "test": "phpunit && php-coveralls --coverage_clover=clover.xml -v"
+    "test": "phpunit"
   },
   "autoload": {
     "psr-4": {
