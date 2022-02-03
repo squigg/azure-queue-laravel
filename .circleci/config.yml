@@ -12,3 +12,10 @@ workflows:
           matrix:
             parameters:
               version: ["7.3", "7.4", "8.0", "8.1"]
+          pre-steps:
+            - run:
+                command: |-
+                  apk add --update --no-cache ${PHPIZE_DEPS}
+                  pecl install pcov-1.0.6
+                  docker-php-ext-enable pcov
+                name: Install PCOV
