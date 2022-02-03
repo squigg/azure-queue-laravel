@@ -1,7 +1,7 @@
 azure-queue-laravel
 =============
 
-[![Build Status](https://app.travis-ci.com/squigg/azure-queue-laravel.svg?branch=master)](https://travis-ci.org/squigg/azure-queue-laravel)
+[![Build Status](https://app.travis-ci.com/squigg/azure-queue-laravel.svg?branch=master)](https://app.travis-ci.com/squigg/azure-queue-laravel)
 [![Coverage Status](https://coveralls.io/repos/github/squigg/azure-queue-laravel/badge.svg?branch=master)](https://coveralls.io/github/squigg/azure-queue-laravel?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/squigg/azure-queue-laravel/v/stable.png)](https://packagist.org/packages/squigg/azure-queue-laravel)
