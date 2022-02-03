@@ -13,7 +13,10 @@
 	stopOnFailure="false"
 	verbose="true"
 >
-
+	<logging>
+		<log type="coverage-clover" target="clover.xml" />
+	</logging>
+	
 	<!-- List of files with tests inside -->
 	<testsuites>
 		<testsuite name="Package Test Suite">
