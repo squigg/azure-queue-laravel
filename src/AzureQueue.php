@@ -77,7 +77,7 @@ class AzureQueue extends Queue implements QueueInterface
     }
 
     /**
-     * Push a new job onto the queue after a delay.
+     * Push a new job onto the queue after (n) seconds.
      *
      * @param  \DateTime|int $delay
      * @param  string $job
