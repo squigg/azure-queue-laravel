@@ -16,6 +16,7 @@ PHP Laravel Queue Driver package to support Microsoft Azure Storage Queues
 - PHP 7.1+ for Laravel 5.6+
 - PHP 7.2+ for Laravel 6+
 - PHP 7.3+ for Laravel 8+
+- PHP 8.0+ for Laravel 9+
 - Microsoft Azure Storage Account and Storage Account Key
 - Queue container created through Azure Portal or via
 [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/storage/queue?view=azure-cli-latest#az-storage-queue-create)
@@ -28,6 +29,9 @@ You can find this library on [Packagist](https://packagist.org/packages/squigg/a
 
 Require this package in your `composer.json`. The version numbers will follow Laravel.
 
+#### Laravel 9.x
+    "squigg/azure-queue-laravel": "^9.0"
+    composer require squigg/azure-queue-laravel:^9.0
 #### Laravel 8.x
     "squigg/azure-queue-laravel": "^8.0"
     composer require squigg/azure-queue-laravel:^8.0
@@ -122,6 +126,8 @@ Use the normal Laravel Queue functionality as per the [documentation](http://lar
 Remember to update the default queue by setting the `QUEUE_DRIVER` value in your `.env` file to `azure`.
 
 ## Changelog
+
+2022-03-17 - V9.0 - Support for Laravel 9.x
 
 2021-10-16 - V8.1 - Support for PHP 8
 
