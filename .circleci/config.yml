@@ -1,0 +1,22 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+orbs: 
+  php: circleci/php@1.1.0
+
+workflows:
+  test:
+    jobs:
+      - php/test:
+          matrix:
+            parameters:
+              version: ["8.0", "8.1"]
+          pre-steps:
+            - run:
+                command: sudo pecl install pcov
+                name: Install PCOV
+          post-steps:
+            - run:
+                command: vendor/bin/php-coveralls --coverage_clover=clover.xml --json_path clover.json -v
+                name: Upload Coverage
