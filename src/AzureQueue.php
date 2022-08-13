@@ -128,10 +128,15 @@ class AzureQueue extends Queue implements QueueInterface, ClearableQueue
      * Delete all of the jobs from the queue.
      *
      * @param  string  $queue
+     * @return void
      */
     public function clear($queue)
     {
-        $this->azure->clearMessagesAsync($this->getQueue($queue));
+        try {
+            $this->azure->clearMessages($this->getQueue($queue));
+        } catch (ServiceException) {
+            $this->clear($queue);
+        }
     }
 
     /**
