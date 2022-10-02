@@ -126,7 +126,7 @@ class AzureQueue extends Queue implements QueueInterface, ClearableQueue
     }
 
     /**
-     * Delete all of the jobs from the queue.
+     * Delete all the jobs from the queue.
      *
      * @param  string  $queue
      * @return void
@@ -135,8 +135,12 @@ class AzureQueue extends Queue implements QueueInterface, ClearableQueue
     {
         try {
             $this->azure->clearMessages($this->getQueue($queue));
-        } catch (ServiceException) {
-            $this->clear($queue);
+        } catch (ServiceException $exception) {
+            if ($exception->getErrorText() === 'OperationTimedOut') {
+                $this->clear($queue);
+            } else {
+                throw $exception;
+            }
         }
     }
 
