@@ -2,8 +2,10 @@
 
 namespace Squigg\AzureQueueLaravel;
 
+use Illuminate\Contracts\Queue\ClearableQueue;
 use Illuminate\Contracts\Queue\Queue as QueueInterface;
 use Illuminate\Queue\Queue;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
 use MicrosoftAzure\Storage\Queue\Models\CreateMessageOptions;
 use MicrosoftAzure\Storage\Queue\Models\GetQueueMetadataResult;
@@ -11,7 +13,7 @@ use MicrosoftAzure\Storage\Queue\Models\ListMessagesOptions;
 use MicrosoftAzure\Storage\Queue\Models\ListMessagesResult;
 use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
-class AzureQueue extends Queue implements QueueInterface
+class AzureQueue extends Queue implements QueueInterface, ClearableQueue
 {
 
     /**
@@ -121,6 +123,25 @@ class AzureQueue extends Queue implements QueueInterface
         }
 
         return null;
+    }
+
+    /**
+     * Delete all the jobs from the queue.
+     *
+     * @param  string  $queue
+     * @return void
+     */
+    public function clear($queue)
+    {
+        try {
+            $this->azure->clearMessages($this->getQueue($queue));
+        } catch (ServiceException $exception) {
+            if ($exception->getErrorText() === 'OperationTimedOut') {
+                $this->clear($queue);
+            } else {
+                throw $exception;
+            }
+        }
     }
 
     /**
