@@ -13,7 +13,7 @@ class ListMessagesResult
         $this->count = $count;
     }
 
-    public function getQueueMessages()
+    public function getQueueMessages(): array
     {
         if ($this->count == 0) return [];
         return array_fill(0, $this->count, new QueueMessage());
