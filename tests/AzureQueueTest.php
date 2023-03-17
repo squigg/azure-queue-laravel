@@ -1,23 +1,22 @@
 <?php
+namespace Squigg\AzureQueueLaravel\Tests;
 
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
 use MicrosoftAzure\Storage\Queue\Models\CreateMessageOptions;
 use MicrosoftAzure\Storage\Queue\Models\GetQueueMetadataResult;
 use MicrosoftAzure\Storage\Queue\Models\ListMessagesOptions;
+use Mockery;
+use Mockery\ExpectationInterface;
+use Mockery\MockInterface;
 use Squigg\AzureQueueLaravel\AzureJob;
 use Squigg\AzureQueueLaravel\AzureQueue;
+use Squigg\AzureQueueLaravel\Tests\Fixtures\ListMessagesResult;
 
 class AzureQueueTest extends TestCase
 {
 
-    /**
-     * @var \Mockery\Mock
-     */
-    protected $azure;
-    /**
-     * @var AzureQueue
-     */
-    protected $queue;
+    protected MockInterface $azure;
+    protected AzureQueue $queue;
 
     protected function setUp(): void
     {
@@ -25,14 +24,10 @@ class AzureQueueTest extends TestCase
         $this->azure = Mockery::mock(IQueue::class);
         $this->queue = new AzureQueue($this->azure, 'myqueue', 5);
         $this->queue->setContainer($this->app);
+        $this->queue->setConnectionName("myconnection");
     }
 
-    /**
-     * @param Mockery\Expectation $mock
-     * @param int $count
-     * @return Mockery\Expectation
-     */
-    protected function setListMessagesReturnExpectation($mock, $count = 1)
+    protected function setListMessagesReturnExpectation(ExpectationInterface $mock, int $count = 1): ExpectationInterface
     {
         return $mock->andReturn(new ListMessagesResult($count));
     }

@@ -11,7 +11,7 @@ workflows:
       - php/test:
           matrix:
             parameters:
-              version: ["8.0", "8.1"]
+              version: ["8.1", "8.2"]
           pre-steps:
             - run:
                 command: sudo pecl install pcov

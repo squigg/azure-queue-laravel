@@ -13,7 +13,7 @@ class AzureQueueServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         /** @var QueueManager $manager */
         $manager = $this->app['queue'];

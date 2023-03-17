@@ -10,12 +10,8 @@ class AzureConnector implements ConnectorInterface
 
     /**
      * Establish a queue connection.
-     *
-     * @param  array $config
-     *
-     * @return \Illuminate\Contracts\Queue\Queue
      */
-    public function connect(array $config)
+    public function connect(array $config): AzureQueue
     {
         $connectionString = 'DefaultEndpointsProtocol=' . $config['protocol'] . ';AccountName=' . $config['accountname'] . ';AccountKey=' . $config['key'];
 
