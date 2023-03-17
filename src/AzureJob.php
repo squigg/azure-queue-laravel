@@ -7,29 +7,22 @@ use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
 use MicrosoftAzure\Storage\Queue\Models\QueueMessage;
-use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
 class AzureJob extends Job implements JobContract
 {
 
     /**
      * The Azure QueueRestProxy instance.
-     *
-     * @var QueueRestProxy
      */
-    protected $azure;
+    protected IQueue $azure;
 
     /**
      * The Azure QueueMessage instance.
-     *
-     * @var QueueMessage
      */
-    protected $job;
+    protected QueueMessage $job;
 
     /**
      * The queue that the job belongs to.
-     *
-     * @var string
      */
     protected $queue;
 
@@ -43,11 +36,11 @@ class AzureJob extends Job implements JobContract
      * @param string $queue
      *
      */
-    public function __construct(Container $container,
-        IQueue $azure,
-        QueueMessage $job,
-        $connectionName,
-        $queue)
+    public function __construct(Container    $container,
+                                IQueue       $azure,
+                                QueueMessage $job,
+                                string       $connectionName,
+                                string       $queue)
     {
         $this->azure = $azure;
         $this->job = $job;
@@ -58,10 +51,8 @@ class AzureJob extends Job implements JobContract
 
     /**
      * Delete the job from the queue.
-     *
-     * @return void
      */
-    public function delete()
+    public function delete(): void
     {
         parent::delete();
         $this->azure->deleteMessage($this->queue, $this->job->getMessageId(), $this->job->getPopReceipt());
@@ -71,10 +62,8 @@ class AzureJob extends Job implements JobContract
      * Release the job back into the queue.
      *
      * @param int $delay
-     *
-     * @return void
      */
-    public function release($delay = 0)
+    public function release($delay = 0): void
     {
         parent::release($delay);
         $this->azure->updateMessage($this->queue, $this->job->getMessageId(), $this->job->getPopReceipt(), null,
@@ -83,58 +72,48 @@ class AzureJob extends Job implements JobContract
 
     /**
      * Get the number of times the job has been attempted.
-     *
-     * @return int
      */
-    public function attempts()
+    public function attempts(): int
     {
         return $this->job->getDequeueCount();
     }
 
     /**
      * Get the IoC container instance.
-     *
-     * @return Container
      */
-    public function getContainer()
+    public function getContainer(): Container
     {
         return $this->container;
     }
 
     /**
      * Get the underlying Azure client instance.
-     *
-     * @return QueueRestProxy
      */
-    public function getAzure()
+    public function getAzure(): IQueue
     {
         return $this->azure;
     }
 
     /**
      * Get the underlying raw Azure job.
-     *
-     * @return QueueMessage
      */
-    public function getAzureJob()
+    public function getAzureJob(): QueueMessage
     {
         return $this->job;
     }
 
     /**
-     * @return int
+     * Get the job ID
      */
-    public function getJobId()
+    public function getJobId(): int
     {
         return $this->job->getMessageId();
     }
 
     /**
      * Get the raw body string for the job.
-     *
-     * @return string
      */
-    public function getRawBody()
+    public function getRawBody(): string
     {
         return $this->job->getMessageText();
     }

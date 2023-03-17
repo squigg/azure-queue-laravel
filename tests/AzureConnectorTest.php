@@ -1,23 +1,19 @@
 <?php
+namespace Squigg\AzureQueueLaravel\Tests;
 
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
 use MicrosoftAzure\Storage\Queue\QueueRestProxy;
+use Mockery;
+use Mockery\MockInterface;
 use Squigg\AzureQueueLaravel\AzureConnector;
 use Squigg\AzureQueueLaravel\AzureQueue;
 
 class AzureConnectorTest extends TestCase
 {
 
-    /**
-     * @var AzureConnector
-     */
-    protected $connector;
-
-    /**
-     * @var \Mockery\Mock
-     */
-    protected $queueRestProxy;
-    protected $config;
+    protected AzureConnector $connector;
+    protected MockInterface $queueRestProxy;
+    protected array $config;
 
     protected function setUp(): void
     {
@@ -43,7 +39,6 @@ class AzureConnectorTest extends TestCase
 
         $this->queueRestProxy->shouldReceive('createQueueService')->once()->with($connectionString)->andReturn($queueProxy);
 
-        /** @var AzureQueue $azureQueue */
         $azureQueue = $this->connector->connect($this->config);
         $this->assertEquals('baz', $azureQueue->getQueue(null));
         $this->assertEquals(25, $azureQueue->getVisibilityTimeout());

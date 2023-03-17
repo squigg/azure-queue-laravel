@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" beStrictAboutOutputDuringTests="true" beStrictAboutTestsThatDoNotTestAnything="true" bootstrap="phpunit.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" verbose="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage processUncoveredFiles="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" beStrictAboutOutputDuringTests="true" bootstrap="phpunit.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" cacheDirectory=".phpunit.cache">
+  <!-- List of source files for code coverage checker -->
+  <coverage>
     <include>
       <directory suffix=".php">src/</directory>
     </include>
@@ -13,7 +14,7 @@
   <testsuites>
     <testsuite name="Package Test Suite">
       <directory suffix=".php">tests</directory>
+      <exclude>./tests/TestCase.php</exclude>
     </testsuite>
   </testsuites>
-  <!-- List of source files for code coverage checker -->
 </phpunit>

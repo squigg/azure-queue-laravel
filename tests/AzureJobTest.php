@@ -1,32 +1,21 @@
 <?php
+namespace Squigg\AzureQueueLaravel\Tests;
 
 use MicrosoftAzure\Storage\Queue\Internal\IQueue;
 use MicrosoftAzure\Storage\Queue\Models\QueueMessage;
+use Mockery;
+use Mockery\Mock;
+use Mockery\MockInterface;
 use Squigg\AzureQueueLaravel\AzureJob;
 use Squigg\AzureQueueLaravel\AzureQueue;
 
 class AzureJobTest extends TestCase
 {
 
-    /**
-     * @var \Mockery\Mock
-     */
-    protected $azure;
-
-    /**
-     * @var AzureQueue
-     */
-    protected $queue;
-
-    /**
-     * @var QueueMessage
-     */
-    protected $message;
-
-    /**
-     * @var AzureJob
-     */
-    protected $job;
+    protected MockInterface $azure;
+    protected AzureQueue $queue;
+    protected QueueMessage $message;
+    protected AzureJob $job;
 
     protected function setUp(): void
     {

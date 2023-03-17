@@ -1,25 +1,14 @@
 <?php
+namespace Squigg\AzureQueueLaravel\Tests\Fixtures;
+
 use MicrosoftAzure\Storage\Queue\Models\QueueMessage;
 
-/**
- * Created by PhpStorm.
- * User: squigg
- * Date: 09/10/16
- * Time: 14:23
- */
 class ListMessagesResult
 {
 
-    /**
-     * @var int
-     */
-    protected $count;
+    protected int $count;
 
-    /**
-     * ListMessagesResult constructor.
-     * @param int $count
-     */
-    public function __construct($count = 1)
+    public function __construct(int $count = 1)
     {
         $this->count = $count;
     }

@@ -1,16 +1,21 @@
 <?php
+namespace Squigg\AzureQueueLaravel\Tests;
 
-abstract class TestCase extends Orchestra\Testbench\TestCase
+use Mockery;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Squigg\AzureQueueLaravel\AzureQueueServiceProvider;
+
+abstract class TestCase extends OrchestraTestCase
 {
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
-            Squigg\AzureQueueLaravel\AzureQueueServiceProvider::class,
+            AzureQueueServiceProvider::class,
         ];
     }
 
-    protected function getPackageAliases($app)
+    protected function getPackageAliases($app): array
     {
         return [];
     }
