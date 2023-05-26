@@ -105,7 +105,7 @@ class AzureJob extends Job implements JobContract
     /**
      * Get the job ID
      */
-    public function getJobId(): int
+    public function getJobId(): string
     {
         return $this->job->getMessageId();
     }
