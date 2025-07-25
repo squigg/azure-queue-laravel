@@ -49,19 +49,19 @@ jobs:
       - name: Run test suite
         run: php vendor/bin/phpunit
 
-#      -   name: Upload coverage results to Coveralls
-#          if: matrix.coverage
-#          env:
-#            COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#            COVERALLS_PARALLEL: true
-#            COVERALLS_FLAG_NAME: "${{matrix.os}} | PHP${{matrix.php}} Symfony@${{matrix.symfony || '*'}}"
-#          run: php bin/php-coveralls -v --exclude-no-stmt
-#
-#  coveralls-finish:
-#    needs: tests
-#    runs-on: ubuntu-latest
-#    steps:
-#      -   name: Notify Coveralls when build is finished
-#          run: |
-#            curl -k https://coveralls.io/webhook?repo_token=${{ secrets.GITHUB_TOKEN }} \
-#                -d "repo_name=$GITHUB_REPOSITORY&payload[build_num]=$GITHUB_RUN_ID&payload[status]=done"
+      - name: Upload coverage results to Coveralls
+        if: matrix.coverage
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_PARALLEL: true
+          COVERALLS_FLAG_NAME: "${{matrix.os}} | PHP${{matrix.php}} Symfony@${{matrix.symfony || '*'}}"
+        run: php bin/php-coveralls -v --exclude-no-stmt
+
+  coveralls-finish:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Coveralls when build is finished
+        run: |
+          curl -k https://coveralls.io/webhook?repo_token=${{ secrets.GITHUB_TOKEN }} \
+              -d "repo_name=$GITHUB_REPOSITORY&payload[build_num]=$GITHUB_RUN_ID&payload[status]=done"
