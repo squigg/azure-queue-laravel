@@ -34,14 +34,13 @@ jobs:
               os: windows-latest
               coverage: 'xdebug'
 
-    # continue-on-error: ${{ matrix.php == '8.3' }}
-
     steps:
       - name: PHP setup
         uses: shivammathur/setup-php@2.34.1
         with:
           php-version: ${{ matrix.php }}
           ini-values: zend.assertions=1, error_reporting=-1, display_errors=On, log_errors_max_len=0
+          extensions: openssl, mbstring, tokenizer, xml, ctype, fileinfo, curl
           coverage: ${{ matrix.coverage || 'none' }}
       - name: Checkout source
         uses: actions/checkout@v4
