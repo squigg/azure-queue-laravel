@@ -34,13 +34,13 @@ jobs:
 
     steps:
       - name: PHP setup
-      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: ${{ matrix.php }}
           ini-values: zend.assertions=1, error_reporting=-1, display_errors=On, log_errors_max_len=0
           coverage: ${{ matrix.coverage || 'none' }}
       - name: Checkout source
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Run test suite
