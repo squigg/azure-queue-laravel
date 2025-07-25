@@ -1,0 +1,64 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  tests:
+    name: "${{matrix.os}} | PHP${{matrix.php}}"
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          -   php: '8.2'
+              os: ubuntu-latest
+              coverage: 'xdebug'
+          -   php: '8.3'
+              os: ubuntu-latest
+              coverage: 'xdebug'
+          -   php: '8.3'
+              os: windows-latest
+              coverage: 'xdebug'
+          -   php: '8.4'
+              os: ubuntu-latest
+              coverage: 'xdebug'
+          -   php: '8.4'
+              os: windows-latest
+              coverage: 'xdebug'
+
+    # continue-on-error: ${{ matrix.php == '8.3' }}
+
+    steps:
+      - name: PHP setup
+      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: ${{ matrix.php }}
+          ini-values: zend.assertions=1, error_reporting=-1, display_errors=On, log_errors_max_len=0
+          coverage: ${{ matrix.coverage || 'none' }}
+      - name: Checkout source
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Run test suite
+        run: php vendor/bin/phpunit -v
+
+#      -   name: Upload coverage results to Coveralls
+#          if: matrix.coverage
+#          env:
+#            COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#            COVERALLS_PARALLEL: true
+#            COVERALLS_FLAG_NAME: "${{matrix.os}} | PHP${{matrix.php}} Symfony@${{matrix.symfony || '*'}}"
+#          run: php bin/php-coveralls -v --exclude-no-stmt
+#
+#  coveralls-finish:
+#    needs: tests
+#    runs-on: ubuntu-latest
+#    steps:
+#      -   name: Notify Coveralls when build is finished
+#          run: |
+#            curl -k https://coveralls.io/webhook?repo_token=${{ secrets.GITHUB_TOKEN }} \
+#                -d "repo_name=$GITHUB_REPOSITORY&payload[build_num]=$GITHUB_RUN_ID&payload[status]=done"
