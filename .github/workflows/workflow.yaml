@@ -58,7 +58,7 @@ jobs:
           flag-name: "${{matrix.os}} | PHP${{matrix.php}}"
           parallel: true
 
-  finish:
+  coveralls-finish:
     needs: tests
     if: ${{ always() }}
     runs-on: ubuntu-latest
