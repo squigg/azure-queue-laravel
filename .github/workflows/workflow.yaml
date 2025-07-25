@@ -1,0 +1,68 @@
+name: azure-queue-laravel
+
+on:
+  push:
+    branches:
+      - master
+      - "[1-9][0-9].x"
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  tests:
+    name: "${{matrix.os}} | PHP${{matrix.php}}"
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          -   php: '8.2'
+              os: ubuntu-latest
+              coverage: 'xdebug'
+          -   php: '8.3'
+              os: ubuntu-latest
+              coverage: 'xdebug'
+          -   php: '8.3'
+              os: windows-latest
+              coverage: 'xdebug'
+          -   php: '8.4'
+              os: ubuntu-latest
+              coverage: 'xdebug'
+          -   php: '8.4'
+              os: windows-latest
+              coverage: 'xdebug'
+
+    steps:
+      - name: PHP setup
+        uses: shivammathur/setup-php@2.34.1
+        with:
+          php-version: ${{ matrix.php }}
+          ini-values: zend.assertions=1, error_reporting=-1, display_errors=On, log_errors_max_len=0
+          extensions: openssl, mbstring, tokenizer, xml, ctype, fileinfo, curl
+          coverage: ${{ matrix.coverage || 'none' }}
+
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Run test suite
+        run: php vendor/bin/phpunit
+
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@v2
+        with:
+          flag-name: "${{matrix.os}} | PHP${{matrix.php}}"
+          parallel: true
+
+  coveralls-finish:
+    needs: tests
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true

@@ -2,7 +2,7 @@
 azure-queue-laravel
 =============
 
-[![CircleCI](https://circleci.com/gh/squigg/azure-queue-laravel/tree/master.svg?style=shield)](https://circleci.com/gh/squigg/azure-queue-laravel/tree/master)
+[![Github Actions](https://github.com/squigg/azure-queue-laravel/actions/workflows/workflow.yaml/badge.svg?branch=master)](https://github.com/squigg/azure-queue-laravel/actions/workflows/workflow.yaml)
 [![Coverage Status](https://coveralls.io/repos/github/squigg/azure-queue-laravel/badge.svg?branch=master)](https://coveralls.io/github/squigg/azure-queue-laravel?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/squigg/azure-queue-laravel/v/stable.png)](https://packagist.org/packages/squigg/azure-queue-laravel)

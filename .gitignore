@@ -5,3 +5,5 @@ composer.lock
 .idea
 /test-coverage/
 .phpunit.result.cache
+.phpunit.cache
+clover.xml
