@@ -42,26 +42,28 @@ jobs:
           ini-values: zend.assertions=1, error_reporting=-1, display_errors=On, log_errors_max_len=0
           extensions: openssl, mbstring, tokenizer, xml, ctype, fileinfo, curl
           coverage: ${{ matrix.coverage || 'none' }}
+
       - name: Checkout source
         uses: actions/checkout@v4
+
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
       - name: Run test suite
         run: php vendor/bin/phpunit
 
-      - name: Upload coverage results to Coveralls
-        if: matrix.coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: "${{matrix.os}} | PHP${{matrix.php}} Symfony@${{matrix.symfony || '*'}}"
-        run: php bin/php-coveralls -v --exclude-no-stmt
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@v2
+        with:
+          flag-name: "${{matrix.os}} | PHP${{matrix.php}}"
+          parallel: true
 
-  coveralls-finish:
+  finish:
     needs: tests
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Coveralls when build is finished
-        run: |
-          curl -k https://coveralls.io/webhook?repo_token=${{ secrets.GITHUB_TOKEN }} \
-              -d "repo_name=$GITHUB_REPOSITORY&payload[build_num]=$GITHUB_RUN_ID&payload[status]=done"
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true
