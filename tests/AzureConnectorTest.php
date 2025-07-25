@@ -5,6 +5,7 @@ use MicrosoftAzure\Storage\Queue\Internal\IQueue;
 use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Test;
 use Squigg\AzureQueueLaravel\AzureConnector;
 use Squigg\AzureQueueLaravel\AzureQueue;
 
@@ -31,7 +32,7 @@ class AzureConnectorTest extends TestCase
         $this->queueRestProxy = Mockery::mock('alias:' . QueueRestProxy::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_azure_queue()
     {
         $connectionString = 'DefaultEndpointsProtocol=https;AccountName=foo;AccountKey=bar';
@@ -44,7 +45,7 @@ class AzureConnectorTest extends TestCase
         $this->assertEquals(25, $azureQueue->getVisibilityTimeout());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_azure_queue_with_endpoint()
     {
         $this->config['endpoint'] = 'mysuffix';
@@ -57,7 +58,7 @@ class AzureConnectorTest extends TestCase
         $this->connector->connect($this->config);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_azure_queue_with_queue_endpoint()
     {
         $this->config['queue_endpoint'] = 'http://localhost:10001/test';

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" beStrictAboutOutputDuringTests="true" bootstrap="vendor/autoload.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" cacheDirectory=".phpunit.cache">
-  <!-- List of source files for code coverage checker -->
-  <coverage>
-    <include>
-      <directory suffix=".php">src/</directory>
-    </include>
-    <report>
-      <clover outputFile="clover.xml"/>
-    </report>
-  </coverage>
-  <logging/>
-  <!-- List of files with tests inside -->
-  <testsuites>
-    <testsuite name="Package Test Suite">
-      <directory>tests</directory>
-    </testsuite>
-  </testsuites>
+<phpunit beStrictAboutOutputDuringTests="true" bootstrap="vendor/autoload.php" colors="true"
+         cacheDirectory=".phpunit.cache">
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+    <coverage>
+        <report>
+            <clover outputFile="clover.xml"/>
+        </report>
+    </coverage>
+    <logging/>
+    <testsuites>
+        <testsuite name="Package Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>

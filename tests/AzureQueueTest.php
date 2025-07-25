@@ -8,6 +8,7 @@ use MicrosoftAzure\Storage\Queue\Models\ListMessagesOptions;
 use Mockery;
 use Mockery\ExpectationInterface;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Test;
 use Squigg\AzureQueueLaravel\AzureJob;
 use Squigg\AzureQueueLaravel\AzureQueue;
 use Squigg\AzureQueueLaravel\Tests\Fixtures\ListMessagesResult;
@@ -32,7 +33,7 @@ class AzureQueueTest extends TestCase
         return $mock->andReturn(new ListMessagesResult($count));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_push_message_to_queue()
     {
         $this->azure->shouldReceive('createMessage')->once()->withArgs(function ($queue, $payload) {
@@ -42,7 +43,7 @@ class AzureQueueTest extends TestCase
         $this->queue->push('foojob', 'bardata');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_pop_message_from_queue()
     {
         $this->setListMessagesReturnExpectation($this->azure->shouldReceive('listMessages')->once());
@@ -51,7 +52,7 @@ class AzureQueueTest extends TestCase
         $this->assertInstanceOf(AzureJob::class, $message);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_pop_message_from_queue_using_default()
     {
         $this->setListMessagesReturnExpectation($this->azure->shouldReceive('listMessages')->once());
@@ -61,7 +62,7 @@ class AzureQueueTest extends TestCase
         $this->assertEquals('myqueue', $message->getQueue());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_null_if_no_messages_to_pop()
     {
         $this->setListMessagesReturnExpectation($this->azure->shouldReceive('listMessages')->once(), 0);
@@ -70,7 +71,7 @@ class AzureQueueTest extends TestCase
         $this->assertNull($message);
     }
 
-    /** @test */
+    #[Test]
     public function it_passes_visibility_timeout_set_in_config()
     {
         $mockClient = $this->azure->shouldReceive('listMessages')->once()->withArgs(function ($queue,
@@ -82,7 +83,7 @@ class AzureQueueTest extends TestCase
         $this->queue->pop('myqueue');
     }
 
-    /** @test */
+    #[Test]
     public function it_only_fetches_first_message()
     {
         $mockClient = $this->azure->shouldReceive('listMessages')->once()->withArgs(function ($queue,
@@ -93,13 +94,13 @@ class AzureQueueTest extends TestCase
         $this->queue->pop('myqueue');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_visibility_timeout()
     {
         $this->assertEquals(5, $this->queue->getVisibilityTimeout());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_queue_a_job_for_later()
     {
         $this->azure->shouldReceive('createMessage')->once()->withArgs(function ($queue,
@@ -112,7 +113,7 @@ class AzureQueueTest extends TestCase
         $this->queue->later(10, 'foojob', 'bardata', 'myqueue');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_queue_size()
     {
         $this->azure->shouldReceive('getQueueMetadata')->with('myqueue')->andReturn(new GetQueueMetadataResult(5, []));
@@ -120,7 +121,7 @@ class AzureQueueTest extends TestCase
         $this->assertEquals(5, $this->queue->size('myqueue'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_azure_instance()
     {
         $this->assertInstanceOf(IQueue::class, $this->queue->getAzure());

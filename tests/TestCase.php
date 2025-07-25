@@ -1,6 +1,7 @@
 <?php
 namespace Squigg\AzureQueueLaravel\Tests;
 
+use Illuminate\Foundation\Bootstrap\HandleExceptions;
 use Mockery;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Squigg\AzureQueueLaravel\AzureQueueServiceProvider;
@@ -24,6 +25,7 @@ abstract class TestCase extends OrchestraTestCase
     {
         $this->addToAssertionCount(Mockery::getContainer()->mockery_getExpectationCount());
         Mockery::close();
+        HandleExceptions::flushState();
     }
 
 }
