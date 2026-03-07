@@ -8,11 +8,11 @@ use PHPUnit\Framework\Attributes\Test;
 use Squigg\AzureQueueLaravel\AzureConnector;
 use Squigg\AzureQueueLaravel\AzureQueueServiceProvider;
 
-class AzureQueueServiceProviderTest extends TestCase
+final class AzureQueueServiceProviderTest extends TestCase
 {
 
     #[Test]
-    public function it_can_boot_and_setup_queue_manager()
+    public function it_can_boot_and_setup_queue_manager(): void
     {
         $mockApp = Mockery::mock(Application::class);
         $mockQueueManager = Mockery::mock(QueueManager::class);
