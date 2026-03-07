@@ -35,51 +35,51 @@ class AzureJobTest extends TestCase
     }
 
     #[Test]
-    public function it_can_get_job_id()
+    public function it_can_get_job_id(): void
     {
         $this->assertEquals('1234', $this->job->getJobId());
     }
 
     #[Test]
-    public function it_can_delete_job_from_queue()
+    public function it_can_delete_job_from_queue(): void
     {
         $this->azure->shouldReceive('deleteMessage')->once()->withArgs(['myqueue', '1234', '9876']);
         $this->job->delete();
     }
 
     #[Test]
-    public function it_can_release_job_back_to_queue()
+    public function it_can_release_job_back_to_queue(): void
     {
         $this->azure->shouldReceive('updateMessage')->once()->withArgs(['myqueue', '1234', '9876', null, 10]);
         $this->job->release(10);
     }
 
     #[Test]
-    public function it_can_get_azure_job()
+    public function it_can_get_azure_job(): void
     {
         $this->assertEquals($this->message, $this->job->getAzureJob());
     }
 
     #[Test]
-    public function it_can_get_raw_body()
+    public function it_can_get_raw_body(): void
     {
         $this->assertEquals('{"abcd":"efgh"}', $this->job->getRawBody());
     }
 
     #[Test]
-    public function it_can_get_azure_proxy()
+    public function it_can_get_azure_proxy(): void
     {
         $this->assertInstanceOf(IQueue::class, $this->job->getAzure());
     }
 
     #[Test]
-    public function it_can_get_number_of_attempts()
+    public function it_can_get_number_of_attempts(): void
     {
         $this->assertEquals(2, $this->job->attempts());
     }
 
     #[Test]
-    public function it_can_get_app_container()
+    public function it_can_get_app_container(): void
     {
         $this->assertEquals($this->app, $this->job->getContainer());
     }
