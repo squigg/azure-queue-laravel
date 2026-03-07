@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Squigg\AzureQueueLaravel\AzureConnector;
 use Squigg\AzureQueueLaravel\AzureQueue;
 
-class AzureConnectorTest extends TestCase
+final class AzureConnectorTest extends TestCase
 {
 
     protected AzureConnector $connector;

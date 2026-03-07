@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Squigg\AzureQueueLaravel\AzureConnector;
 use Squigg\AzureQueueLaravel\AzureQueueServiceProvider;
 
-class AzureQueueServiceProviderTest extends TestCase
+final class AzureQueueServiceProviderTest extends TestCase
 {
 
     #[Test]

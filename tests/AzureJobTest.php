@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Squigg\AzureQueueLaravel\AzureJob;
 use Squigg\AzureQueueLaravel\AzureQueue;
 
-class AzureJobTest extends TestCase
+final class AzureJobTest extends TestCase
 {
 
     protected MockInterface $azure;

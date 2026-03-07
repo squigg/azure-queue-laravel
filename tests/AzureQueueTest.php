@@ -13,7 +13,7 @@ use Squigg\AzureQueueLaravel\AzureJob;
 use Squigg\AzureQueueLaravel\AzureQueue;
 use Squigg\AzureQueueLaravel\Tests\Fixtures\ListMessagesResult;
 
-class AzureQueueTest extends TestCase
+final class AzureQueueTest extends TestCase
 {
 
     protected MockInterface $azure;
